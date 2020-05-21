@@ -1,0 +1,41 @@
+{
+    "compilerOptions": {
+        "plugins": [
+            {
+                "name": "typescript-tslint-plugin",
+                "configFile": "./tslint.json",
+                "alwaysShowRuleFailuresAsWarnings": true,
+                "exclude": [ "node_modules" ]
+            }
+        ],
+        "sourceMap": true,
+        "strictNullChecks": true,
+        "module": "ES2020",
+        "jsx": "react",
+        "allowJs": true,
+        "allowSyntheticDefaultImports": true,
+        "noImplicitAny": false,
+        "moduleResolution": "Node",
+        "baseUrl": "./",
+        "esModuleInterop": true,
+        "paths": {
+            "common": [ "./common/index" ],
+            "create-store": [ "./background/src/store/createStore" ],
+            "test-setup": [ "./test-setup/index" ]
+        }
+    },
+    "include": [
+        "./background",
+        "./content-script",
+        "./popup",
+        "./common",
+        "./test-setup"
+    ],
+    "exclude": [
+        "node_modules",
+        "./content-script/webpack.config.js",
+        "./background/webpack.config.js",
+        "./popup/webpack.config.js",
+        "./test-setup/assetsTransformer.js"
+    ]
+}

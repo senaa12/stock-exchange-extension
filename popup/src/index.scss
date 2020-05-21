@@ -1,0 +1,27 @@
+@import "./assets/style/functions.scss";
+@import "./assets/style/variables.scss";
+@import "./assets/style/colors-generator.scss";
+
+/* FONT STUFF*/
+@import url('https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap');
+
+:root {
+    @include color-pallete($green, "green");
+    @include color-pallete($red, "red");
+    @include color-pallete($yellow, "yellow");
+    @include dark-color-pallete($white, "white");
+    @include light-color-pallete($black, "black");
+}   
+
+body { 
+    height: $extension-height;
+    width: $extension-width;
+    margin: 0;
+    font-family: 'Ubuntu', sans-serif;
+
+    // disable selection
+    -webkit-user-select: none;
+    -moz-user-select: none;   
+    -ms-user-select: none;    
+    user-select: none;
+}
