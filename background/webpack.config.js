@@ -1,5 +1,6 @@
 const path = require("path");
 const webpack = require("webpack");
+const dotenv = require("dotenv");
 
 const isProd = process.env.ENV !== "dev";
 
@@ -31,8 +32,9 @@ module.exports = {
     },
     plugins: [
       new webpack.DefinePlugin({ 
-        'process.env': { 
-            PRODUCTION: JSON.stringify(isProd),
+        'process.env': {  
+            PRODUCTION: JSON.stringify(isProd), 
+            FINNHUB_TOKEN: JSON.stringify(dotenv.config().parsed.FINNHUB_TOKEN) 
         }
       })
     ]
