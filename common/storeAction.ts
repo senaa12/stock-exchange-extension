@@ -1,10 +1,6 @@
-import { FetchOptionsEnum } from './utils';
-
-export enum AppDispatchActionEnum {
-
+export enum AppActionEnum {
+    GetWallStreetStocks = '@App-GET_ALL_STOCKS'
 }
-
-export type AppActionEnum = FetchOptionsEnum;
 
 export declare type ActionType = AppActionEnum;
 

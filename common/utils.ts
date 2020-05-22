@@ -6,8 +6,3 @@ export type RecursivePartial<T> = {
     T[P] extends object ? RecursivePartial<T[P]> :
     T[P];
 };
-
-export enum FetchOptionsEnum {
-    GetWallStreetStocks = '@FETCH/GET_WALL_STREET_STOCKS'
-}
-

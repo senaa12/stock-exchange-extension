@@ -1,15 +1,17 @@
-import { FetchOptionsEnum, LocalStorageData, RootReducerState } from 'common';
+import { ActionType, AppActionEnum, FetchOptionsEnum, getStorageLocal, RootReducerState, setStorageLocal } from 'common';
 import moment from 'moment';
 import { Store } from 'redux';
 
-export const endpoints: Record<FetchOptionsEnum, string> = {
-    [FetchOptionsEnum.GetWallStreetStocks]: '/stock/symbol?exchange=US'
+export const endpoints: Record<FetchOptionsEnum, (filter?: string) => string> = {
+    [FetchOptionsEnum.GetWallStreetStocks]: () => '/stock/symbol?exchange=US',
+    [FetchOptionsEnum.GetCompanyProfile]: (filter: string) => `/stock/profile2?symbol=${filter}`
 };
 
 class ApiFetcher {
     private endpointBase: string = 'https://finnhub.io/api/v1';
-    private getEndpoint(requestType: FetchOptionsEnum) {
-        return `${this.endpointBase}${endpoints[requestType]}&token=${process.env.FINNHUB_TOKEN}`;
+    private getEndpoint(requestType: FetchOptionsEnum, filter?: string) {
+        const endpointFunction = endpoints[requestType];
+        return `${this.endpointBase}${endpointFunction(filter)}&token=${process.env.FINNHUB_TOKEN}`;
     }
 
     // must call at the beginning
@@ -20,44 +22,31 @@ class ApiFetcher {
 
     /**
      * makes api request to https://finnhub.io/ API and dispatches action to store
-     * and if saveInLocalStorage flag is true, saves result to storage.local
      * @param request
      * @param saveInLocalStorage
      */
-    public async apiFetch<T>(request: FetchOptionsEnum, saveInLocalStorage?: boolean): Promise<T | undefined> {
-        const url: string = this.getEndpoint(request);
+    public async apiFetch<T>(request: FetchOptionsEnum, filter?: string, dispatchActionType?: ActionType): Promise<T | undefined> {
+        const url: string = this.getEndpoint(request, filter);
 
         try {
             const response = await fetch(url);
             if(response.ok) {
                 const data = await response.json();
 
-                this.store.dispatch({
-                    type: request,
-                    data
-                });
-
-                if(saveInLocalStorage) {
-                    const modelToSave: LocalStorageData = {
-                        dateString: moment().toString(),
-                        result: data
-                    };
-
-                    chrome.storage.local.set({ [request]: JSON.stringify(modelToSave) }, () => {
-                        // tslint:disable-next-line: no-console
-                        console.log(`Saved to local storage request type ${request}`);
+                if(!dispatchActionType) {
+                    this.store.dispatch({
+                        type: dispatchActionType,
+                        data
                     });
                 }
 
                 return Promise.resolve(data as T);
             } else {
-                // tslint:disable-next-line: no-console
                 console.error(response);
                 return Promise.reject(undefined);
             }
 
         } catch(ex) {
-            // tslint:disable-next-line: no-console
             console.error(ex);
             return Promise.reject(undefined);
         }
@@ -69,19 +58,19 @@ class ApiFetcher {
      * @param fetchType
      * @param refreshIfOlderThan
      */
-    public loadFromStorageOrFetch(fetchType: FetchOptionsEnum, refreshIfOlderThan?: moment.Moment) {
-        chrome.storage.local.get(fetchType, (items: Record<FetchOptionsEnum, any>) => {
-            const data = JSON.parse(items[fetchType] ?? '{}') as LocalStorageData;
+    public async loadFromStorageOrFetch(fetchType: FetchOptionsEnum, refreshIfOlderThan?: moment.Moment, dispatchActionType?: ActionType) {
+        const storedData = await getStorageLocal<any>(fetchType);
 
-            if(!Object.keys(data).length || (refreshIfOlderThan ? moment(data.dateString) < refreshIfOlderThan : true)) {
-                this.apiFetch(fetchType, true);
-            } else {
-                this.store.dispatch({
-                    type: fetchType,
-                    data: data.result
-                });
-            }
-        });
+        if(!storedData || (refreshIfOlderThan ? moment(storedData.dateString) < refreshIfOlderThan : true)) {
+            const result = await this.apiFetch(fetchType, undefined, dispatchActionType);
+
+            setStorageLocal(fetchType, result);
+        } else {
+            this.store.dispatch({
+                type: dispatchActionType,
+                data: storedData.data
+            });
+        }
     }
 }
 

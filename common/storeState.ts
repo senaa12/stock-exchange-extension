@@ -1,4 +1,4 @@
-import { Stock } from './stockApiModels';
+import { Stock } from './fetchApiModels';
 
 export interface AppReducerState {
     stocks?: Array<Stock>;

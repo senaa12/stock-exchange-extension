@@ -5,7 +5,7 @@ export const appReducerInitialState: AppReducerState = {
 
 export default (state = appReducerInitialState, action: Action<AppActionEnum>): AppReducerState => {
     switch(action.type) {
-        case FetchOptionsEnum.GetWallStreetStocks: {
+        case AppActionEnum.GetWallStreetStocks: {
             return {
                 ...state,
                 stocks: action.data
