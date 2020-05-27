@@ -28,7 +28,12 @@ export default function useCompanyProfile(symbol: string): CompanyProfile | unde
         const fetchData = async() => {
             const storageData = await getStorageLocal<Record<string, CompanyProfile>>(FetchOptionsEnum.GetCompanyProfile);
 
-            if(!storageData || !storageData.data[symbol]) {
+            if(storageData && storageData.data[symbol]) {
+                dispatch({
+                    type: FetchOptionsEnum.GetCompanyProfile,
+                    result: storageData.data[symbol]
+                });
+            } else {
                 const processResponse = async(loadedData: CompanyProfile) => {
                     if(loadedData) {
                         setStorageLocal(FetchOptionsEnum.GetCompanyProfile, {
@@ -50,11 +55,6 @@ export default function useCompanyProfile(symbol: string): CompanyProfile | unde
                         request: FetchOptionsEnum.GetCompanyProfile
                     }
                 }, processResponse);
-            } else {
-                dispatch({
-                    type: FetchOptionsEnum.GetCompanyProfile,
-                    result: storageData.data[symbol]
-                });
             }
         };
 

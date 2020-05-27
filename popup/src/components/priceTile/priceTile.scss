@@ -1,0 +1,47 @@
+@import '../../assets/style/functions.scss';
+
+.current-price {
+    display: flex;
+    flex-direction: column;
+    padding: 9px;
+    font-size: px-to-rem(13px);
+    border: solid 1px;
+    border-radius: 16px;
+
+    &__info {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+    &__value {
+        display: flex;
+        align-items: center;
+
+        &__arrow {
+            margin-right: 15px;
+            &.rising {
+                fill: var(--green);
+            }
+            &.falling {
+                fill: var(--red);
+                transform: rotate(180deg);
+            }
+        }  
+        &__percent {
+            .percent {
+                font-size: px-to-rem(17px);
+                margin-right: 5px;
+            }
+            .number {
+                font-size: px-to-rem(13px);
+            }
+            &.rising {
+                color: var(--green);
+            }
+            &.falling {
+                color: var(--red);
+            }
+        }
+    }
+
+}

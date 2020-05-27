@@ -4,7 +4,8 @@ import { Store } from 'redux';
 
 export const endpoints: Record<FetchOptionsEnum, (filter?: string) => string> = {
     [FetchOptionsEnum.GetWallStreetStocks]: () => '/stock/symbol?exchange=US',
-    [FetchOptionsEnum.GetCompanyProfile]: (filter: string) => `/stock/profile2?symbol=${filter}`
+    [FetchOptionsEnum.GetCompanyProfile]: (filter: string) => `/stock/profile2?symbol=${filter}`,
+    [FetchOptionsEnum.GetQuotaForStock]: (filter: string) => `/quote?symbol=${filter}`
 };
 
 class ApiFetcher {
@@ -23,7 +24,8 @@ class ApiFetcher {
     /**
      * makes api request to https://finnhub.io/ API and dispatches action to store
      * @param request
-     * @param saveInLocalStorage
+     * @param filter
+     * @param dispatchActionType
      */
     public async apiFetch<T>(request: FetchOptionsEnum, filter?: string, dispatchActionType?: ActionType): Promise<T | undefined> {
         const url: string = this.getEndpoint(request, filter);
@@ -33,10 +35,13 @@ class ApiFetcher {
             if(response.ok) {
                 const data = await response.json();
 
-                if(!dispatchActionType) {
+                if(dispatchActionType) {
                     this.store.dispatch({
                         type: dispatchActionType,
-                        data
+                        data: {
+                            fetchedData: data,
+                            filter
+                        }
                     });
                 }
 
@@ -58,13 +63,20 @@ class ApiFetcher {
      * @param fetchType
      * @param refreshIfOlderThan
      */
-    public async loadFromStorageOrFetch(fetchType: FetchOptionsEnum, refreshIfOlderThan?: moment.Moment, dispatchActionType?: ActionType) {
+    public async loadFromStorageOrFetch(fetchType: FetchOptionsEnum, dispatchActionType?: ActionType, refreshIfOlderThan?: moment.Moment) {
         const storedData = await getStorageLocal<any>(fetchType);
 
         if(!storedData || (refreshIfOlderThan ? moment(storedData.dateString) < refreshIfOlderThan : true)) {
             const result = await this.apiFetch(fetchType, undefined, dispatchActionType);
 
-            setStorageLocal(fetchType, result);
+            if(result) {
+                setStorageLocal(fetchType, result);
+
+                this.store.dispatch({
+                    type: dispatchActionType,
+                    data: result
+                });
+            }
         } else {
             this.store.dispatch({
                 type: dispatchActionType,

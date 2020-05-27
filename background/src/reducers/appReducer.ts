@@ -8,7 +8,7 @@ export default (state = appReducerInitialState, action: Action<AppActionEnum>): 
         case AppActionEnum.GetWallStreetStocks: {
             return {
                 ...state,
-                stocks: action.data
+                stocks: action.data.fetchedData
             };
         }
         default: {

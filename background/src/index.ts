@@ -11,7 +11,7 @@ export const store = createStore(isProduction);
 export default wrapStore(store);
 
 apiFetcher.registerStore(store);
-apiFetcher.loadFromStorageOrFetch(FetchOptionsEnum.GetWallStreetStocks, moment().add(-3, 'days'), AppActionEnum.GetWallStreetStocks);
+apiFetcher.loadFromStorageOrFetch(FetchOptionsEnum.GetWallStreetStocks, AppActionEnum.GetWallStreetStocks, moment().add(-3, 'days'));
 
 chrome.runtime.onMessage.addListener(messageHandler);
 

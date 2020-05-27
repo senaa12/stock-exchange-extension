@@ -1,0 +1,33 @@
+@for $i from 0 to 101 {
+    @keyframes slide-#{$i} {
+        0% {
+            left: 0;
+            opacity: 1;
+        }
+        #{(100 - $i - 0.02) * 1%} {
+            left: percentage((100 - $i) / 100);
+            opacity: 1;
+        }
+        #{(100 - $i - 0.01) * 1%} {
+            left: percentage((100 - $i) / 100);
+            opacity: 0;
+        }
+        #{(100 - $i) * 1%} {
+            left: percentage($i / -100);
+            opacity: 0;
+        }
+        #{(100 - $i + 0.01) * 1%} {
+            left: percentage($i / -100);
+            opacity: 1;
+        }
+        100% {
+            left: 0;
+        }
+    }
+}
+
+.slider {
+    display: flex;
+    justify-content: space-around;
+}
+

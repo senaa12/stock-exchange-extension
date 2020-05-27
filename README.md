@@ -1,7 +1,17 @@
 # stock-exchange-extension
-Chrome extension for monitoring stock price
+Chrome extension for monitoring stock prices
 
-Declaring types in ChromeApi messaging structure:
+## Starting project
+
+To start project you need to get key to access the [finnhub.io](https://finnhub.io/) API. When you get the key, create `.env` file in project root with structure
+
+```
+FINNHUB_TOKEN="ENTER YOUR API KEY"
+```
+
+Next run `npm install` and `npm run build` to build project.
+
+## Declaring types in ChromeApi messaging structure:
 
 Every chrome api message has structure: 
 
@@ -12,10 +22,10 @@ export interface ChromeApiMessage<T extends ChromeApiMessageTypeEnum> {
 }
 ```
 
-where type `ChromeApiMessageTypeEnum` is either `BackgroundMessageTypeEnum` or `ContentScriptMessageTypeEnum`. Payload is determined based on message type. If you want to send payload with message you need to define interface in `BackgroundMessageTypePayload` if message is sent to background page or in `ContentScriptMessageTypePayload` if message is sent to content script. For instance if you are sending message to background page you need to insert this row in `BackgroundMessageTypePayload`: 
+where type `ChromeApiMessageTypeEnum` is either `BackgroundMessageTypeEnum` or `ContentScriptMessageTypeEnum`. Payload is determined based on message type. If you want to send payload with message you need to register payload interface in `BackgroundMessageTypePayload` or in `ContentScriptMessageTypePayload` depends where the message is being sent. For instance if you are sending message to background page you need to register payload interface in the `BackgroundMessageTypePayload`: 
 
 ```
     T extends BackgroundMessageTypeEnum.YOUR_MESSAGE_TYPE ? I_YOUR_MESSAGE_PAYLOAD :
 ```
 
-This interface `I_YOUR_MESSAGE_PAYLOAD` should typically be placed in `commonApiModels` file. Now when you insert this row in Payload type declaration messageHandler function will correctly recognize messageType.
+This interface `I_YOUR_MESSAGE_PAYLOAD` should typically be placed in `commonApiModels` file. Now when you registered payload interface; messageHandler function will correctly recognize payload you need to send with the message.
