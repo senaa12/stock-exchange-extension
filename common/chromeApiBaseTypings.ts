@@ -15,15 +15,18 @@ export type ContentScriptPayloadMapper = {
 
 //#region => background page
 export enum BackgroundMessageTypeEnum {
-    ApiFetch
+    ApiFetch,
+    RefreshNews
 }
 
 export type BackgroundPayloadMapper = {
     [BackgroundMessageTypeEnum.ApiFetch]: ApiFetchBackgroundMessage;
+    [BackgroundMessageTypeEnum.RefreshNews]: null;
 };
 
 export type BackgroundMessages =
-        ChromeApiMessage<BackgroundPayloadMapper, BackgroundMessageTypeEnum.ApiFetch>;
+        ChromeApiMessage<BackgroundPayloadMapper, BackgroundMessageTypeEnum.ApiFetch> |
+        ChromeApiMessage<BackgroundPayloadMapper, BackgroundMessageTypeEnum.RefreshNews>;
 
 //#endregion => Background page
 

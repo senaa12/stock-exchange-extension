@@ -1,4 +1,5 @@
 import * as React from 'react';
+import ActionButtons from './actionButtons/actionButtons';
 import CustomCombobox from './customCombobox/customCombobox';
 import PricesSlider from './pricesSlider/pricesSlider';
 
@@ -13,12 +14,21 @@ class App extends React.Component<AppProps> {
         super(props);
     }
 
-    public render() {
+    public renderAppContent() {
         return (
-            <div>
-                <PricesSlider />
+            <div className={'app-content'}>
                 <CustomCombobox />
             </div>
+        );
+    }
+
+    public render() {
+        return (
+            <>
+                <PricesSlider />
+                {this.renderAppContent()}
+                <ActionButtons />
+            </>
         );
     }
 }

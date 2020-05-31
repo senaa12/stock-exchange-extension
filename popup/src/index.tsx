@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { applyMiddleware, Store } from 'webext-redux';
-import App from './components/app';
+import App from './containers/app';
 
 import './index.scss';
 

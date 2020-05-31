@@ -4,9 +4,9 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import communicationManager from '../../assets/communicationManager';
 import useCompanyProfile from '../../assets/useCompanyProfileHook';
-import Icon from '../icon/icon';
-import { IconEnum, IconSize } from '../icon/iconEnum';
-import LoadingComponent from '../loadingComponent/loadingComponent';
+import Icon from '../../components/icon/icon';
+import { IconEnum, IconSize } from '../../components/icon/iconEnum';
+import LoadingComponent from '../../components/loadingComponent/loadingComponent';
 
 import './priceTile.scss';
 

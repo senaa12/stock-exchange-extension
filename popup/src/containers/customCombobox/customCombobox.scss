@@ -1,21 +1,23 @@
 @import '../../assets/style/functions.scss';
 
-.custom-combobox {
-    width: 230px;
-    padding: 5px;
-    border-radius: 8px;
-    border: solid 0.5px;
-    font-size: px-to-rem(13px);
-}
-
-.input-close {
-    position: relative;
-    left: -20px;
-    height: 10px;
-    width: 10px;
+.input-wrapper {
+    .custom-combobox {
+        width: 230px;
+        padding: 5px;
+        border-radius: 8px;
+        border: solid 0.5px;
+        font-size: px-to-rem(13px);
+    }
     
-    &:hover {
-        cursor: pointer;
+    .input-close {
+        position: relative;
+        left: -20px;
+        height: 10px;
+        width: 10px;
+        
+        &:hover {
+            cursor: pointer;
+        }
     }
 }
 

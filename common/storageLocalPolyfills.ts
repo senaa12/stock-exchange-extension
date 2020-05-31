@@ -1,5 +1,6 @@
 import moment from 'moment';
 import { LocalStorageData } from './fetchApiModels';
+import { isObjectEmpty } from './utils';
 
 /**
  * chrome.storage.local.set written without callback
@@ -36,7 +37,7 @@ export function getStorageLocal<T = any>(key: string): Promise<LocalStorageData<
             chrome.storage.local.get(key, (items: Record<string, string>) => {
                 const data = JSON.parse(items[key] ?? '{}') as LocalStorageData<T>;
 
-                if(!Object.keys(data).length) {
+                if(isObjectEmpty(data)) {
                     console.warn(`Record with key: ${key} does not exist`);
                     resolve(undefined);
                 } else {

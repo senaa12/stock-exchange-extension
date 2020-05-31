@@ -1,7 +1,8 @@
 export enum FetchOptionsEnum {
     GetWallStreetStocks = '@FETCH/GET_WALL_STREET_STOCKS',
     GetCompanyProfile = '@FETCH/GET_COMPANY_PROFILE',
-    GetQuotaForStock = '@FETCH/GET_QUOTA_FOR_STOCK'
+    GetQuotaForStock = '@FETCH/GET_QUOTA_FOR_STOCK',
+    GetCompanyNews = '@FETCH/GET_COMPANY_NEWS'
 }
 
 export interface LocalStorageData<T> {

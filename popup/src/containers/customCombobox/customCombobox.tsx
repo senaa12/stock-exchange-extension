@@ -4,8 +4,8 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { addStockToFavorites } from '../../actions/appActions';
-import Icon from '../icon/icon';
-import { IconEnum } from '../icon/iconEnum';
+import Icon from '../../components/icon/icon';
+import { IconEnum } from '../../components/icon/iconEnum';
 
 import './customCombobox.scss';
 
@@ -89,14 +89,21 @@ const customCombobox: React.FunctionComponent<CustomComboboxProps> = (props) => 
 
     return (
         <>
-            <input
-                className='custom-combobox'
-                type='text'
-                onChange={onChange}
-                value={searchValue}
-                placeholder={'Search stocks'}
-            />
-            <Icon iconName={IconEnum.Close} className={'input-close'} onClick={onCloseClick} testId={'clear-button'} />
+            <div className={'input-wrapper'}>
+                <input
+                    className='custom-combobox'
+                    type='text'
+                    onChange={onChange}
+                    value={searchValue}
+                    placeholder={'Search stocks'}
+                />
+                <Icon
+                    iconName={IconEnum.Close}
+                    className={'input-close'}
+                    onClick={onCloseClick}
+                    testId={'clear-button'}
+                />
+            </div>
             {renderComboboxResult()}
         </>
     );

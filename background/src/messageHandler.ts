@@ -1,5 +1,6 @@
 import {  BackgroundMessages, BackgroundMessageTypeEnum, CallbackFunction, MessageSender } from 'common';
 import apiFetcher from './apiFetcher';
+import newsLoader from './newsLoader';
 
 export default (
     request: BackgroundMessages,
@@ -13,8 +14,12 @@ export default (
                 // return true keeps channel open and waits when sendResponse will be called (async actions)
                 return true;
             }
+            case BackgroundMessageTypeEnum.RefreshNews: {
+                newsLoader.refreshNews().then(sendResponse);
+                return true;
+            }
             default: {
-                const exhaustiveCheck: never = request.type;
+                const exhaustiveCheck: never = request;
                 return;
             }
         }

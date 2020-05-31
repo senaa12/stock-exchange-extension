@@ -1,10 +1,12 @@
 import { FetchOptionsEnum, RootReducerActions, RootReducerState } from 'common';
+import moment from 'moment';
 import { Store } from 'redux';
 
 export const endpoints: Record<FetchOptionsEnum, (filter?: string) => string> = {
     [FetchOptionsEnum.GetWallStreetStocks]: () => '/stock/symbol?exchange=US',
     [FetchOptionsEnum.GetCompanyProfile]: (filter: string) => `/stock/profile2?symbol=${filter}`,
-    [FetchOptionsEnum.GetQuotaForStock]: (filter: string) => `/quote?symbol=${filter}`
+    [FetchOptionsEnum.GetQuotaForStock]: (filter: string) => `/quote?symbol=${filter}`,
+    [FetchOptionsEnum.GetCompanyNews]: (filter: string) => `/company-news?symbol=${filter}&from=${moment().add(-3, 'days').format('YYYY-MM-D')}&to=${moment().format('YYYY-MM-D')}`
 };
 
 class ApiFetcher {

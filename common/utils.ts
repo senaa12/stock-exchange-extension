@@ -6,3 +6,5 @@ export type RecursivePartial<T> = {
     T[P] extends object ? RecursivePartial<T[P]> :
     T[P];
 };
+
+export const isObjectEmpty = (obj: object) => !Object.keys(obj).length;
