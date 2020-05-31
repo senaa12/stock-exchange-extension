@@ -6,6 +6,7 @@ export interface QuoteReducerState {
 
 export interface AppReducerState {
     stocks?: Array<Stock>;
+    favoriteStocks: Array<string>;
 }
 
 export interface RootReducerState {

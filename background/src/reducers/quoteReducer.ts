@@ -1,13 +1,13 @@
-import { Action, QuoteActionEnum, QuoteReducerState } from 'common';
+import { QuoteActionEnum, QuoteReducerActions, QuoteReducerState } from 'common';
 
 export const quoteReducerIntialState: QuoteReducerState = {};
 
-export default (state = quoteReducerIntialState, action: Action<QuoteActionEnum>): QuoteReducerState => {
+export default (state = quoteReducerIntialState, action: QuoteReducerActions): QuoteReducerState => {
     switch(action.type) {
-        case QuoteActionEnum.SetQouteForStock: {
+        case QuoteActionEnum.SetQuoteForStock: {
             return {
                 ...state,
-                [action.data.filter]: action.data.fetchedData
+                [action.payload.filter!]: action.payload.fetchedData
             };
         }
         default: {

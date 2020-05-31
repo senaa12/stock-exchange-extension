@@ -1,6 +1,8 @@
 
 export enum IconEnum {
-    UpArrow = 'up-arrow'
+    UpArrow = 'up-arrow',
+    Close = 'close',
+    Star = 'star'
 }
 
 export enum IconSize {

@@ -14,9 +14,9 @@ module.exports = {
     },
 
     // automatic mocking of Chrome API
-    // setupFiles: [
-    //     "jest-webextension-mock"
-    // ],
+    setupFiles: [
+        "jest-webextension-mock"
+    ],
 
     // Runs special logic, such as cleaning up components
     // when using React Testing Library and adds special

@@ -7,6 +7,8 @@ export interface IconProps {
     className?: string;
     iconSize?: IconSize;
     style?: React.CSSProperties;
+    onClick?: () => void;
+    testId?: string;
 }
 
 const icon = (props: IconProps) => {
@@ -26,6 +28,8 @@ const icon = (props: IconProps) => {
             height={props.iconSize ? props.iconSize : IconSize.Small}
             width={props.iconSize ? props.iconSize : IconSize.Small}
             style={props.style}
+            onClick={props.onClick}
+            data-testid={props.testId}
         >
             <use xlinkHref={`#${props.iconName}`} />
         </svg>

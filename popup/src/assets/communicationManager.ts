@@ -1,7 +1,7 @@
-import { CallbackFunction, ChromeApiMessage, ChromeApiMessageTypeEnum } from 'common';
+import { CallbackFunction, ChromeApiMessage } from 'common';
 
 class CommunicationManager {
-    public sendMessageToActiveTab<T extends ChromeApiMessageTypeEnum>(message: ChromeApiMessage<T>, onReponse?: CallbackFunction<any>) {
+    public sendMessageToActiveTab<P extends {}, T extends keyof P>(message: ChromeApiMessage<P, T>, onReponse?: CallbackFunction<any>) {
         chrome.tabs.query({ currentWindow: true, active: true }, function(tabs) {
             if (tabs[0] && tabs[0].id) {
                 chrome.tabs.sendMessage(tabs[0].id, message, onReponse);
@@ -9,11 +9,11 @@ class CommunicationManager {
         });
     }
 
-    public sendMessageToTab<T extends ChromeApiMessageTypeEnum>(tabID: number, message: ChromeApiMessage<T>, onReponse?: CallbackFunction<any>) {
+    public sendMessageToTab<P extends {}, T extends keyof P>(tabID: number, message: ChromeApiMessage<P, T>, onReponse?: CallbackFunction<any>) {
         chrome.tabs.sendMessage(tabID, message, onReponse);
     }
 
-    public sendMessageToBackgroundPage<T extends ChromeApiMessageTypeEnum>(message: ChromeApiMessage<T>, onReponse?: CallbackFunction<any>) {
+    public sendMessageToBackgroundPage<P extends {}, T extends keyof P>(message: ChromeApiMessage<P, T>, onReponse?: CallbackFunction<any>) {
         chrome.runtime.sendMessage(message, onReponse);
     }
 }

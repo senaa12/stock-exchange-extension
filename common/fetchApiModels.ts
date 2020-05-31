@@ -9,6 +9,11 @@ export interface LocalStorageData<T> {
     data: T;
 }
 
+export interface FetchReduxActionResult<T> {
+    fetchedData: T;
+    filter?: string | number;
+}
+
 export interface Stock {
     description: string;
     displaySymbol: string;
@@ -42,4 +47,18 @@ export interface Quote {
     c: number;
     /** Previous close price */
     pc: number;
+}
+
+export interface News {
+    category: string;
+    /** published time in UNIX timestamp */
+    datetime: number;
+    headline: string;
+    id: number;
+    image: string;
+    /** news related to stock ID */
+    related: string;
+    source: string;
+    summary: string;
+    url: string;
 }

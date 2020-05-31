@@ -8,7 +8,7 @@ export const rootReducerInitialState: RootReducerState = {
     quoteReducer: quoteReducerIntialState
 };
 
-export default combineReducers({
+export default combineReducers<RootReducerState>({
     appReducer,
     quoteReducer
 });

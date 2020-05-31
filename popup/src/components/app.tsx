@@ -1,4 +1,6 @@
 import * as React from 'react';
+import CustomCombobox from './customCombobox/customCombobox';
+import PricesSlider from './pricesSlider/pricesSlider';
 
 import './app.scss';
 
@@ -14,7 +16,8 @@ class App extends React.Component<AppProps> {
     public render() {
         return (
             <div>
-                app
+                <PricesSlider />
+                <CustomCombobox />
             </div>
         );
     }

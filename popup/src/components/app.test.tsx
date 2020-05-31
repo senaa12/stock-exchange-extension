@@ -11,7 +11,7 @@ const setup = () => {
 
 describe('App test', () => {
     test('first', () => {
-        const { getByText } = setup();
-        getByText('app');
+        // const { getByText } = setup();
+        // getByText('app');
     });
 });

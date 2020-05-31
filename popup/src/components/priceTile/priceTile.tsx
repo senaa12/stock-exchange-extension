@@ -1,6 +1,6 @@
 import classNames from 'classnames';
-import { BackgroundMessageTypeEnum, FetchOptionsEnum, Quote, QuoteActionEnum, RootReducerState } from 'common';
-import React, { RefObject, useEffect } from 'react';
+import { BackgroundMessageTypeEnum, BackgroundPayloadMapper, FetchOptionsEnum, Quote, QuoteActionEnum, RootReducerState } from 'common';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import communicationManager from '../../assets/communicationManager';
 import useCompanyProfile from '../../assets/useCompanyProfileHook';
@@ -33,9 +33,9 @@ const PriceTile: React.FunctionComponent<PriceTileProps> = props => {
 
     useEffect(() => {
         const fetchNewRates = () => {
-            communicationManager.sendMessageToBackgroundPage<BackgroundMessageTypeEnum.ApiFetch>({
+            communicationManager.sendMessageToBackgroundPage<BackgroundPayloadMapper, BackgroundMessageTypeEnum.ApiFetch>({
                 type: BackgroundMessageTypeEnum.ApiFetch,
-                data: { request: FetchOptionsEnum.GetQuotaForStock, filter: props.stockId, dispatchActionType: QuoteActionEnum.SetQouteForStock }
+                payload: { request: FetchOptionsEnum.GetQuotaForStock, filter: props.stockId, dispatchActionType: QuoteActionEnum.SetQuoteForStock }
             });
         };
         fetchNewRates();

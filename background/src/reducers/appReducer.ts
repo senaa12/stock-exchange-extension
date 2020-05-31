@@ -1,18 +1,25 @@
-import { Action, AppActionEnum, AppReducerState, FetchOptionsEnum } from 'common';
+import { AppActionEnum, AppReducerActions, AppReducerState } from 'common';
 
 export const appReducerInitialState: AppReducerState = {
+    favoriteStocks: []
 };
 
-export default (state = appReducerInitialState, action: Action<AppActionEnum>): AppReducerState => {
+export default (state = appReducerInitialState, action: AppReducerActions): AppReducerState => {
     switch(action.type) {
         case AppActionEnum.GetWallStreetStocks: {
             return {
                 ...state,
-                stocks: action.data.fetchedData
+                stocks: action.payload.fetchedData
+            };
+        }
+        case AppActionEnum.UpdateFavoriteStocks: {
+            return {
+                ...state,
+                favoriteStocks: action.payload
             };
         }
         default: {
-            const type: never = action.type;
+            const type: never = action;
             return state;
         }
     }

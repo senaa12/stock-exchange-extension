@@ -95,12 +95,18 @@ const slider: React.FunctionComponent<SliderProps> = (props) => {
     };
     //#endregion
 
+    // used to update slider line children
     useEffect(() => {
-        if(lineRef.current) {
+        if(lineRefInitialized) {
+            setLineRefInitialized(false);
+        }
+    }, [props.childrenKeys]);
+
+    useEffect(() => {
+        if(!lineRefInitialized && lineRef.current) {
             setLineRefInitialized(true);
         }
-    }, [lineRef]);
-
+    }, [lineRef, lineRefInitialized]);
 
     const className = classNames('slider', props.className);
     return (

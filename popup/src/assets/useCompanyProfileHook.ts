@@ -1,4 +1,4 @@
-import { BackgroundMessageTypeEnum, CompanyProfile, FetchOptionsEnum, getStorageLocal, setStorageLocal } from 'common';
+import { BackgroundMessageTypeEnum, BackgroundPayloadMapper, CompanyProfile, FetchOptionsEnum, getStorageLocal, setStorageLocal } from 'common';
 import { useEffect, useReducer } from 'react';
 import communicationManager from './communicationManager';
 
@@ -48,9 +48,9 @@ export default function useCompanyProfile(symbol: string): CompanyProfile | unde
                     }
                 };
 
-                communicationManager.sendMessageToBackgroundPage<BackgroundMessageTypeEnum.ApiFetch>({
+                communicationManager.sendMessageToBackgroundPage<BackgroundPayloadMapper, BackgroundMessageTypeEnum.ApiFetch>({
                     type: BackgroundMessageTypeEnum.ApiFetch,
-                    data: {
+                    payload: {
                         filter: symbol,
                         request: FetchOptionsEnum.GetCompanyProfile
                     }

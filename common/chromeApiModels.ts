@@ -1,8 +1,8 @@
 import { FetchOptionsEnum } from './fetchApiModels';
-import { ActionType } from './storeAction';
+import { RootReducerActions } from './storeActionBaseTypings';
 
 export interface ApiFetchBackgroundMessage {
     request: FetchOptionsEnum;
     filter: string;
-    dispatchActionType?: ActionType;
+    dispatchActionType?: RootReducerActions['type'];
 }

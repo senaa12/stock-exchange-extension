@@ -3,15 +3,17 @@
 .current-price {
     display: flex;
     flex-direction: column;
-    padding: 9px;
+    justify-content: space-between;
+    padding: px-to-vh(9px) 9px;
     font-size: px-to-rem(13px);
     border: solid 1px;
     border-radius: 16px;
+    min-height: 50px;
 
     &__info {
         display: flex;
         justify-content: space-between;
-        margin-bottom: 10px;
+        margin-bottom: px-to-vh(10px);
     }
     &__value {
         display: flex;

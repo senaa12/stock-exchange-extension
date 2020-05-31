@@ -1,4 +1,4 @@
-import { RecursivePartial, RootReducerState } from 'common';
+import { RecursivePartial, RootReducerActions, RootReducerState } from 'common';
 import deepmerge from 'deepmerge';
 import { applyMiddleware, createStore, Store } from 'redux';
 import logger from 'redux-logger';
@@ -14,11 +14,11 @@ const getMiddleware = (isProd: boolean) => {
     return middleware;
 };
 
-export default (isProd: boolean, initialStateOverride: RecursivePartial<RootReducerState> = {}): Store<RootReducerState> => {
+export default (isProd: boolean, initialStateOverride: RecursivePartial<RootReducerState> = {}): Store<RootReducerState, RootReducerActions> => {
     const initialState = deepmerge(rootReducerInitialState, initialStateOverride) as RootReducerState;
     const middleware = getMiddleware(isProd);
 
-    return createStore(
+    return createStore<RootReducerState, RootReducerActions, any, any>(
         rootReducer,
         initialState,
         !!middleware ? applyMiddleware(...middleware) : undefined,
