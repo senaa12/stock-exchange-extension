@@ -2,7 +2,10 @@
 export enum IconEnum {
     UpArrow = 'up-arrow',
     Close = 'close',
-    Star = 'star'
+    Star = 'star',
+    Share = 'share',
+    Settings = 'settings',
+    News = 'news'
 }
 
 export enum IconSize {

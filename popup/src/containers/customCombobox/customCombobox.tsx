@@ -88,24 +88,22 @@ const customCombobox: React.FunctionComponent<CustomComboboxProps> = (props) => 
     };
 
     return (
-        <>
-            <div className={'input-wrapper'}>
-                <input
-                    className='custom-combobox'
-                    type='text'
-                    onChange={onChange}
-                    value={searchValue}
-                    placeholder={'Search stocks'}
-                />
-                <Icon
-                    iconName={IconEnum.Close}
-                    className={'input-close'}
-                    onClick={onCloseClick}
-                    testId={'clear-button'}
-                />
-            </div>
+        <div className={'input-wrapper'}>
+            <input
+                className='custom-combobox'
+                type='text'
+                onChange={onChange}
+                value={searchValue}
+                placeholder={'Search stocks'}
+            />
+            <Icon
+                iconName={IconEnum.Close}
+                className={'input-close'}
+                onClick={onCloseClick}
+                testId={'clear-button'}
+            />
             {renderComboboxResult()}
-        </>
+        </div>
     );
 };
 

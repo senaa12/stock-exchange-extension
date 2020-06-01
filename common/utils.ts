@@ -8,3 +8,9 @@ export type RecursivePartial<T> = {
 };
 
 export const isObjectEmpty = (obj: object) => !Object.keys(obj).length;
+
+export enum AppStateEnum {
+    NewsScreen,
+    SelectFavorites,
+    Settings
+}

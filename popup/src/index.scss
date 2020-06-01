@@ -20,6 +20,8 @@ body {
     width: $extension-width;
     margin: 0;
     font-family: 'Ubuntu', sans-serif;
+    font-size: px-to-rem(12px);
+    background-color: var(--white-10-dark);
 
     // disable selection
     -webkit-user-select: none;

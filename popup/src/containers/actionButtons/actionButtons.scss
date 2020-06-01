@@ -1,3 +1,13 @@
 .action-buttons {
     min-height: 50px;
+    display: flex;
+    width: 100%;
+
+    .button-base {
+        width: 110px;
+    }
+
+    &__favorite {
+        margin-left: auto;
+    }
 }

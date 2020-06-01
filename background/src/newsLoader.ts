@@ -59,6 +59,8 @@ class NewsLoader {
             arrayMerge: this.mergeNewsArrays
         });
         await setStorageLocal(FetchOptionsEnum.GetCompanyNews, merged);
+        console.log(`NEWS FETCHED - ${new Date().toLocaleTimeString()}`);
+
         return merged;
     }
 }

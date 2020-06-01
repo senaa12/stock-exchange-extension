@@ -1,5 +1,5 @@
 import { BackgroundMessageTypeEnum, BackgroundPayloadMapper, FetchOptionsEnum, getStorageLocal, News } from 'common';
-import { useEffect, useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import communicationManager from './communicationManager';
 
 /**
@@ -8,7 +8,12 @@ import communicationManager from './communicationManager';
  * @param stocksFilter
  */
 export default function useNews(stocksFilter: Array<string>) {
-    const [ news, setNews ] = useState<undefined | Array<News>>();
+    const [ insideFilter, setInsideFilter ] = useState(stocksFilter);
+    const [ news, setNews ] = useState<Array<News> | undefined>();
+
+    const tryDistinctNews = (value: News, index: number, self: Array<News>) => {
+        return self.findIndex(el => el.headline.toLowerCase() === value.headline.toLowerCase()) === index;
+    };
 
     const fetchData = async() => {
         const storageData = await getStorageLocal<Record<string, Array<News>>>(FetchOptionsEnum.GetCompanyNews);
@@ -18,22 +23,32 @@ export default function useNews(stocksFilter: Array<string>) {
             stocksFilter.forEach(s => {
                 const companyNews = storageData.data[s];
 
-                if(companyNews) {
+                if(companyNews && companyNews.length) {
                     generatedNews = generatedNews.concat(companyNews);
                 } else {
                     communicationManager.sendMessageToBackgroundPage<BackgroundPayloadMapper, BackgroundMessageTypeEnum.RefreshNews>({
                         type: BackgroundMessageTypeEnum.RefreshNews,
                         payload: null
-                    }, fetchData);
+                    });
                 }
             });
 
-            setNews(generatedNews.sort((first: News, second: News) => first.datetime - second.datetime));
+            setNews(generatedNews
+                .sort((first: News, second: News) => second.datetime - first.datetime)
+                .filter(tryDistinctNews)
+            );
         }
     };
 
     useEffect(() => {
         fetchData();
+    }, [insideFilter]);
+
+    useEffect(() => {
+        // set inner filter if outer value is changed
+        if(JSON.stringify(insideFilter.sort()) !== JSON.stringify(stocksFilter.sort())) {
+            setInsideFilter(stocksFilter);
+        }
     }, [stocksFilter]);
 
     return news;
