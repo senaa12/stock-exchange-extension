@@ -1,0 +1,33 @@
+@import '../../assets/style/functions.scss';
+
+.action-buttons {
+    min-height: 50px;
+    display: flex;
+    width: 100%;
+    border-top: solid 1px var(--border-color);
+
+    .menu-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: 500;
+        font-size: px-to-rem(18px);
+        width: 50%;
+
+        &.left {
+            border-left: solid 0.5px var(--border-color);
+        }
+
+        &.right {
+            border-right: solid 0.5px var(--border-color);
+        }
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        &.selected {
+            background: linear-gradient(0deg, var(--background-color) 62%, var(--white-40-dark) 100%);
+        }
+    }
+}

@@ -1,4 +1,4 @@
-import { getFavoriteStocksSelector, RootReducerState } from 'common';
+import { areArraysEqual, getFavoriteStocksSelector, RootReducerState } from 'common';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import Slider from '../../components/slider/slider';
@@ -19,7 +19,7 @@ const mapStateToProps = (state: RootReducerState): PricesSliderProps => {
 const pricesSlider: React.FunctionComponent<PricesSliderProps> = props => {
     const [ innerFilter, setInnerFilter ] = useState(props.favoriteStocks);
     useEffect(() => {
-        if(JSON.stringify(innerFilter) !== JSON.stringify(props.favoriteStocks)) {
+        if(!areArraysEqual(innerFilter, props.favoriteStocks)) {
             setInnerFilter(props.favoriteStocks);
         }
     }, [props.favoriteStocks]);

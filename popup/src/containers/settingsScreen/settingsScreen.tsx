@@ -6,34 +6,34 @@ import { Dispatch } from 'redux';
 import { removeStockFromFavorites } from '../../actions/appActions';
 import Icon from '../../components/icon/icon';
 import { IconEnum } from '../../components/icon/iconEnum';
-import CustomCombobox from '../../containers/customCombobox/customCombobox';
+import CustomCombobox from '../customCombobox/customCombobox';
 
-import './favoriteStocks.scss';
+import './settingsScreen.scss';
 
-export interface FavoriteStocksStateProps {
+export interface SettingsScreenStateProps {
     favoriteStocks: Array<Stock>;
 }
 
-export interface FavoriteStocksDispatchProps {
+export interface SettingsScreenDispatchProps {
     removeStockFromFavorites:(stock: Stock) => void;
 }
 
-export declare type FavoriteStocksProps = FavoriteStocksDispatchProps & FavoriteStocksStateProps;
+export declare type SettingsScreenProps = SettingsScreenDispatchProps & SettingsScreenStateProps;
 
-const mapStateToProps = (state: RootReducerState): FavoriteStocksStateProps => {
+const mapStateToProps = (state: RootReducerState): SettingsScreenStateProps => {
     const filtered = state.appReducer.stocks?.filter(s => state.appReducer.favoriteStocks.findIndex(favStock => favStock === s.symbol) > -1);
     return {
         favoriteStocks: filtered ?? []
     };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch): FavoriteStocksDispatchProps => {
+const mapDispatchToProps = (dispatch: Dispatch): SettingsScreenDispatchProps => {
     return {
         removeStockFromFavorites: (stock: Stock) => dispatch(removeStockFromFavorites(stock))
     };
 };
 
-const favoriteStocks: React.FunctionComponent<FavoriteStocksProps> = props => {
+const settingsScreen: React.FunctionComponent<SettingsScreenProps> = props => {
     const removeFromFavorites = useCallback((stock: Stock) => () => props.removeStockFromFavorites(stock), []);
 
     const renderFavoriteStock = (stock: Stock, index: number) => {
@@ -55,7 +55,7 @@ const favoriteStocks: React.FunctionComponent<FavoriteStocksProps> = props => {
         );
     };
 
-    const classname = classNames('favorite-stocks__content__list', {
+    const classname = classNames('favorite-stocks__content__list', 'scrollbar', {
         'no-data': !props.favoriteStocks.length
     });
     return (
@@ -73,4 +73,4 @@ const favoriteStocks: React.FunctionComponent<FavoriteStocksProps> = props => {
     );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(favoriteStocks);
+export default connect(mapStateToProps, mapDispatchToProps)(settingsScreen);

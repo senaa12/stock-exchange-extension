@@ -57,7 +57,7 @@ const customCombobox: React.FunctionComponent<CustomComboboxProps> = (props) => 
             };
 
             return (
-                <div className={'custom-combobox-result'}>
+                <div className={'custom-combobox-result scrollbar'}>
                     {result.map((stock, index) => {
                         const className = classNames('custom-combobox-result__item', {
                             'border-top': !!index,

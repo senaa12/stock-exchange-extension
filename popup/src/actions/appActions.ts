@@ -1,10 +1,5 @@
-import { AppActionEnum, AppActionPayloadMapper, AppStateEnum, getStorageLocal, RootReducerActions, RootReducerState, setStorageLocal, Stock } from 'common';
-import { Dispatch, StoreAction } from 'redux';
-
-export const changeAppState = (newState: AppStateEnum): StoreAction<AppActionPayloadMapper, AppActionEnum.SetAppState> => ({
-    type: AppActionEnum.SetAppState,
-    payload: newState
-});
+import { AppActionEnum, getStorageLocal, RootReducerActions, RootReducerState, setStorageLocal, Stock } from 'common';
+import { Dispatch } from 'redux';
 
 export const addStockToFavorites = (stock: Stock): any => (
     async(dispatch: Dispatch<RootReducerActions>, getState: () => RootReducerState) => {

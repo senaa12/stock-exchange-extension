@@ -1,10 +1,11 @@
 @import '../../assets/style/functions.scss';
 
 .news-screen {
-    max-height: 290px;
-    overflow-y: auto;
-    width: 90vw;
     margin: auto;
+
+    &__content {
+        height: 350px;
+    }
 
     .screen-title {
         font-size: px-to-rem(15px);
@@ -15,12 +16,8 @@
 
     .news-tile-small {
         display: flex;
-        padding: 5px;
+        padding: 10px 5px;
         max-width: 90vw;
-
-        &.border-bottom {
-            border-bottom: solid 1px var(--border-color);
-        }
 
         &__content {
             flex-grow: 1;
@@ -33,7 +30,7 @@
                 display: flex;
                 margin-bottom: 6px;
                 .related {
-                    max-width: 380px;
+                    max-width: 270px;
                     overflow-x: hidden;
                     font-size: px-to-rem(11px);
                     text-overflow: ellipsis;
@@ -59,4 +56,5 @@
             }
         }
     }
+
 }

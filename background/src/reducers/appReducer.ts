@@ -1,8 +1,7 @@
-import { AppActionEnum, AppReducerActions, AppReducerState, AppStateEnum } from 'common';
+import { AppActionEnum, AppReducerActions, AppReducerState } from 'common';
 
 export const appReducerInitialState: AppReducerState = {
     favoriteStocks: [],
-    appState: AppStateEnum.NewsScreen
 };
 
 export default (state = appReducerInitialState, action: AppReducerActions): AppReducerState => {
@@ -17,12 +16,6 @@ export default (state = appReducerInitialState, action: AppReducerActions): AppR
             return {
                 ...state,
                 favoriteStocks: action.payload
-            };
-        }
-        case AppActionEnum.SetAppState: {
-            return {
-                ...state,
-                appState: action.payload
             };
         }
         default: {

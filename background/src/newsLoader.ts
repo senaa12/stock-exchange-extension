@@ -5,8 +5,8 @@ import { Store } from 'redux';
 import apiFetcher from './apiFetcher';
 
 class NewsLoader {
-    // interval to fetch new news
-    private fetchInterval: number = 20000;
+    // interval to fetch new news (1 sec = 1000 ms)
+    private fetchInterval: number = 120000;
 
     // delete news after this amount of days
     private deleteNewsAfter: number = 7;
@@ -59,7 +59,6 @@ class NewsLoader {
             arrayMerge: this.mergeNewsArrays
         });
         await setStorageLocal(FetchOptionsEnum.GetCompanyNews, merged);
-        console.log(`NEWS FETCHED - ${new Date().toLocaleTimeString()}`);
 
         return merged;
     }

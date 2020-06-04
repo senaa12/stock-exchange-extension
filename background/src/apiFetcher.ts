@@ -33,6 +33,8 @@ class ApiFetcher {
 
         try {
             const response = await fetch(url);
+            console.log(`${request} fetched (filter: ${filter}) - ${moment().toLocaleString()}`);
+
             if(response.ok) {
                 const data = await response.json();
 

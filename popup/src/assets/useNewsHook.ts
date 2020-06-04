@@ -1,5 +1,5 @@
-import { BackgroundMessageTypeEnum, BackgroundPayloadMapper, FetchOptionsEnum, getStorageLocal, News } from 'common';
-import { useEffect, useReducer, useState } from 'react';
+import { areArraysEqual, BackgroundMessageTypeEnum, BackgroundPayloadMapper, FetchOptionsEnum, getStorageLocal, News } from 'common';
+import { useEffect, useState } from 'react';
 import communicationManager from './communicationManager';
 
 /**
@@ -46,7 +46,7 @@ export default function useNews(stocksFilter: Array<string>) {
 
     useEffect(() => {
         // set inner filter if outer value is changed
-        if(JSON.stringify(insideFilter.sort()) !== JSON.stringify(stocksFilter.sort())) {
+        if(!areArraysEqual(stocksFilter, insideFilter)) {
             setInsideFilter(stocksFilter);
         }
     }, [stocksFilter]);

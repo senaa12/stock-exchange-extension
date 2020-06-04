@@ -4,10 +4,6 @@
     display: block;
     .custom-combobox {
         width: 230px;
-        padding: 5px;
-        border-radius: 8px;
-        border: solid 0.5px;
-        font-size: px-to-rem(13px);
     }
     
     .input-close {
@@ -31,6 +27,7 @@
     overflow-y: auto;
     padding: 5px;
     border: solid 1px;
+    border-radius: 8px;
 
     &__item {
         padding: 3px 0;

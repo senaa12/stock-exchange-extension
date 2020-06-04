@@ -59,7 +59,7 @@ const PriceTile: React.FunctionComponent<PriceTileProps> = props => {
         return (
             <>
                 <div className={'current-price__info'}>
-                    <span className={'current-price__info__name'} title={companyProfile?.name}>{companyProfile?.ticker}</span>
+                    <span className={'current-price__info__name'} title={companyProfile?.name}>{props.stockId}</span>
                     <span className={'current-price__info__price'}>{quota?.c}</span>
                 </div>
                 <div className={'current-price__value'}>

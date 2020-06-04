@@ -27,11 +27,8 @@ const newsScreen: React.FunctionComponent<NewsScreenProps> = props => {
     const renderNewsTile = (data: News, index: number) => {
         const openInNewTab = () => window.open(data.url, '__blank');
 
-        const classname = classNames('news-tile-small', {
-            'border-bottom': index !== news?.length ?? 0 - 1
-        });
         return (
-            <div className={classname}>
+            <div className={'news-tile-small'}>
                 <div className={'news-tile-small__content'}>
                     <div className={'title'}>{data.headline}</div>
                     <div className={'footer'}>
@@ -49,10 +46,12 @@ const newsScreen: React.FunctionComponent<NewsScreenProps> = props => {
     return (
         <div className={'news-screen'}>
             <div className={'screen-title'}>{'NEWS RELATED TO YOUR FAVORITE STOCKS'}</div>
+            <div className={'news-screen__content scrollbar'}>
             {!news ?
                 <LoadingComponent /> :
                 news.length ? news.map(renderNewsTile) : 'No news'
             }
+            </div>
         </div>
     );
 };
