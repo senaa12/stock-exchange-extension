@@ -24,9 +24,9 @@
             width: 290px;
             .custom-combobox-result__item {
                 display: flex;
+                border-bottom: solid 0.5px var(--border-color);
 
                 &.last {
-                    border-bottom: solid 0.5px var(--border-color);
                     padding-bottom: 3px;
                 }
 
@@ -45,6 +45,28 @@
                         &:hover {
                             cursor: pointer;
                         }
+                    }
+                }
+
+                &-enter {
+                    opacity: 0;
+                    transform: translateY(-100%);
+
+                    &-active {
+                        opacity: 1;
+                        transform: translateY(0%);
+                        transition: opacity 500ms, transform 500ms;
+                    }
+                }
+
+                &-exit {
+                    opacity: 1;
+                    transform: translateY(0%);
+
+                    &-active {
+                        opacity: 0;
+                        transform: translateY(-100%);
+                        transition: opacity 500ms, transform 500ms;
                     }
                 }
             }

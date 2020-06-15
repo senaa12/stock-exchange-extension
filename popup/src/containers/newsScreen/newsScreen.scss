@@ -18,6 +18,16 @@
         display: flex;
         padding: 10px 5px;
         max-width: 90vw;
+        border-bottom: solid 0.5px var(--border-color);
+        border-top: solid 0.5px var(--border-color);
+
+        &.first {
+            border-top: none;
+        }
+
+        &.last {
+            border-bottom: none;
+        }
 
         &__content {
             flex-grow: 1;

@@ -20,6 +20,11 @@ const slider: React.FunctionComponent<SliderProps> = (props) => {
     const lineRef = useRef<HTMLDivElement>(null);
     const [lineRefInitialized, setLineRefInitialized] = useState<boolean>(false);
 
+    // when mouse is over slider => pause all animations
+    const [mouseOverState, setMouseOverState] = useState<boolean>(false);
+    const setMouseOverStateTrue = () => setMouseOverState(true);
+    const setMouseOverStateFalse = () => setMouseOverState(false);
+
     /**
      * width of sliding line is dynamically calculated, if the 100% width + length of one child left and right is too small,
      * than it will increase so that all children can get into it (+ some 10px padding is included, that should be equal to childrens padding
@@ -95,16 +100,25 @@ const slider: React.FunctionComponent<SliderProps> = (props) => {
     };
     //#endregion
 
+    // if mouse leaves window but extension is still open
+    useEffect(() => {
+        document.addEventListener('mouseleave', setMouseOverStateFalse);
+    }, []);
+
     // used to update slider line children
     useEffect(() => {
         if(lineRefInitialized) {
             setLineRefInitialized(false);
+            lineRef.current?.removeEventListener('mouseenter', setMouseOverStateTrue);
+            lineRef.current?.removeEventListener('mouseleave', setMouseOverStateFalse);
         }
     }, [props.childrenKeys]);
 
     useEffect(() => {
         if(!lineRefInitialized && lineRef.current) {
             setLineRefInitialized(true);
+            lineRef.current.addEventListener('mouseenter', setMouseOverStateTrue);
+            lineRef.current.addEventListener('mouseleave', setMouseOverStateFalse);
         }
     }, [lineRef, lineRefInitialized]);
 
@@ -118,6 +132,7 @@ const slider: React.FunctionComponent<SliderProps> = (props) => {
                 }
 
                 const styleToInject: React.CSSProperties = {
+                        animationPlayState: mouseOverState ? 'paused' : 'running',
                         animation: `slide-${offset} ${animationDuration}s linear infinite`,
                         position: 'relative',
                         width: props.childWidth

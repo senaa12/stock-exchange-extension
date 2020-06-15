@@ -1,22 +1,24 @@
 import classNames from 'classnames';
 import React from 'react';
+import Icon from '../../components/icon/icon';
+import { IconEnum } from '../../components/icon/iconEnum';
 
 export interface MenuButtonProps {
-    label: 'News' | 'Settings';
+    icon: IconEnum.Settings | IconEnum.News;
     selected: boolean;
     onClick: () => void;
 }
 
 export const menuButton: React.FunctionComponent<MenuButtonProps> = props => {
     const className = classNames('menu-button', {
-        'left': props.label === 'Settings',
-        'right': props.label === 'News',
+        'left': props.icon === IconEnum.Settings,
+        'right': props.icon === IconEnum.News,
         'selected': props.selected
     });
 
     return (
         <div className={className} onClick={props.onClick}>
-            {props.label}
+            <Icon iconName={props.icon} />{props.icon === IconEnum.News ? ' News' : ' Settings'}
         </div>
     );
 };

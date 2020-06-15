@@ -1,7 +1,7 @@
 @import '../../assets/style/functions.scss';
 
 .action-buttons {
-    min-height: 50px;
+    min-height: 40px;
     display: flex;
     width: 100%;
     border-top: solid 1px var(--border-color);
@@ -10,9 +10,18 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        font-weight: 500;
-        font-size: px-to-rem(18px);
+        font-weight: 400;
         width: 50%;
+        transition: cubic-bezier(0.5, 1, 0.1, 1) .25s;
+        font-size: px-to-rem(14px);
+       
+        .svg-icon {
+            margin-right: px-to-vw(5px);
+            height: 20px;
+            width: 20px;
+            transition: cubic-bezier(0.5, 1, 0.1, 1) .25s;
+            transform-origin: 50% 50%;
+        }
 
         &.left {
             border-left: solid 0.5px var(--border-color);
@@ -24,10 +33,20 @@
 
         &:hover {
             cursor: pointer;
+            background-color: var(--hover-color);
+            font-size: px-to-rem(15px);
+
+            .svg-icon {
+                margin-right: px-to-vw(7px);
+                transform: scale(1.1);
+            }
         }
 
         &.selected {
-            background: linear-gradient(0deg, var(--background-color) 62%, var(--white-40-dark) 100%);
+            background: linear-gradient(0deg, var(--background-color) 62%, var(--menu-buttons-gradient-color) 100%);
+            &:hover {
+                background: linear-gradient(0deg, var(--hover-color) 62%, var(--menu-buttons-gradient-color) 100%);
+            }
         }
     }
 }

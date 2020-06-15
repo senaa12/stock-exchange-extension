@@ -7,6 +7,7 @@ import useNews from '../../assets/useNewsHook';
 import Icon from '../../components/icon/icon';
 import { IconEnum, IconSize } from '../../components/icon/iconEnum';
 import LoadingComponent from '../../components/loadingComponent/loadingComponent';
+
 import './newsScreen.scss';
 
 export interface NewsScreenStateProps {
@@ -27,8 +28,12 @@ const newsScreen: React.FunctionComponent<NewsScreenProps> = props => {
     const renderNewsTile = (data: News, index: number) => {
         const openInNewTab = () => window.open(data.url, '__blank');
 
+        const newsTileClassName = classNames('news-tile-small', {
+            'first': !index,
+            'last': index === news?.length! - 1
+        });
         return (
-            <div className={'news-tile-small'}>
+            <div className={newsTileClassName}>
                 <div className={'news-tile-small__content'}>
                     <div className={'title'}>{data.headline}</div>
                     <div className={'footer'}>
@@ -43,8 +48,9 @@ const newsScreen: React.FunctionComponent<NewsScreenProps> = props => {
         );
     };
 
+    const className = classNames('news-screen');
     return (
-        <div className={'news-screen'}>
+        <div className={className}>
             <div className={'screen-title'}>{'NEWS RELATED TO YOUR FAVORITE STOCKS'}</div>
             <div className={'news-screen__content scrollbar'}>
             {!news ?

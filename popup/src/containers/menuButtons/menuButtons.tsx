@@ -1,6 +1,7 @@
 import React from 'react';
 import MenuButton from './menuButton';
 
+import { IconEnum } from '../../components/icon/iconEnum';
 import './menuButtons.scss';
 
 export interface MenuButtonsProps {
@@ -15,12 +16,12 @@ const menuButtons: React.FunctionComponent<MenuButtonsProps> = props => {
     return (
         <div className={'action-buttons'}>
             <MenuButton
-                label={'News'}
+                icon={IconEnum.News}
                 selected={props.isNewsScreenSelected}
                 onClick={onNewsButtonClick}
             />
             <MenuButton
-                label={'Settings'}
+                icon={IconEnum.Settings}
                 selected={!props.isNewsScreenSelected}
                 onClick={onSettingsButtonClick}
             />

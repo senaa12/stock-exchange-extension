@@ -21,7 +21,7 @@ const icon = (props: IconProps) => {
         }
     }, []);
 
-    const className = classNames(props.iconName, props.className);
+    const className = classNames(props.iconName, props.className, 'icon', 'svg-icon');
     return(
         <svg
             className={className}

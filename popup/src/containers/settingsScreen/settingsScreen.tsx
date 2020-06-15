@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import { RootReducerState, Stock } from 'common';
 import React, { useCallback } from 'react';
 import { connect } from 'react-redux';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { Dispatch } from 'redux';
 import { removeStockFromFavorites } from '../../actions/appActions';
 import Icon from '../../components/icon/icon';
@@ -37,37 +38,48 @@ const settingsScreen: React.FunctionComponent<SettingsScreenProps> = props => {
     const removeFromFavorites = useCallback((stock: Stock) => () => props.removeStockFromFavorites(stock), []);
 
     const renderFavoriteStock = (stock: Stock, index: number) => {
-        const className = classNames('custom-combobox-result__item', {
-            'border-top': !!index,
+        const transitionClassName = 'custom-combobox-result__item';
+        const className = classNames(transitionClassName, {
             'first': !index,
             'last': index === props.favoriteStocks.length - 1
         });
 
         return (
-            <div className={className} data-testid={stock.symbol}>
-                <div>
-                    <span className={'symbol'}>{stock.symbol}</span>
-                    <span className={'name'}>{' '}({stock.description})</span></div>
-                <div className={'remove-button'}>
-                    <Icon iconName={IconEnum.Close} onClick={removeFromFavorites(stock)} />
+            <CSSTransition
+                key={stock.symbol}
+                timeout={500}
+                classNames={transitionClassName}
+            >
+                <div className={className} data-testid={stock.symbol}>
+                    <div>
+                        <span className={'symbol'}>{stock.symbol}</span>
+                        <span className={'name'}>{' '}({stock.description})</span>
+                    </div>
+                    <div className={'remove-button'}>
+                        <Icon
+                            iconName={IconEnum.Close}
+                            onClick={removeFromFavorites(stock)}
+                        />
+                    </div>
                 </div>
-            </div>
+            </CSSTransition>
         );
     };
 
     const classname = classNames('favorite-stocks__content__list', 'scrollbar', {
         'no-data': !props.favoriteStocks.length
     });
+    const componentClassName = classNames('favorite-stocks');
     return (
-        <div className={'favorite-stocks'}>
+        <div className={componentClassName}>
             <div className={'favorite-stocks__description'}>
                 {'SELECT YOUR FAVORITE STOCKS'}
             </div>
             <div className={'favorite-stocks__content'}>
                 <CustomCombobox />
-                <div className={classname}>
+                <TransitionGroup className={classname}>
                     {props.favoriteStocks.length ? props.favoriteStocks.map(renderFavoriteStock) : 'No data'}
-                </div>
+                </TransitionGroup>
             </div>
         </div>
     );

@@ -6,7 +6,7 @@ import apiFetcher from './apiFetcher';
 
 class NewsLoader {
     // interval to fetch new news (1 sec = 1000 ms)
-    private fetchInterval: number = 120000;
+    private fetchInterval: number = 600000; // 10min
 
     // delete news after this amount of days
     private deleteNewsAfter: number = 7;
@@ -15,7 +15,7 @@ class NewsLoader {
      * initialize news loader: registers store, makes initial fetch loader will continue to fetch news every fetchInterval minutes
      */
     private store: Store<RootReducerState, RootReducerActions>;
-    public initialize(storeToRegister: Store<RootReducerState, RootReducerActions>) {
+    public initialize = (storeToRegister: Store<RootReducerState, RootReducerActions>) => {
         this.store = storeToRegister;
         this.refreshNews();
 
@@ -28,18 +28,19 @@ class NewsLoader {
      * @param sourceArray
      * @param options
      */
-    private mergeNewsArrays(destArray: Array<News>, sourceArray: Array<News>, options: any): Array<News> {
+    private mergeNewsArrays = (destArray: Array<News>, sourceArray: Array<News>, options: any): Array<News> => {
         // used to filter existing news
         const newArray = destArray.concat(sourceArray.filter(news => !destArray.find(n => n.id === news.id)));
 
-        // do not keep older news than @params this.deleteNewsAfter
-        return newArray.filter(news => moment.unix(news.datetime) < moment().add(-this.deleteNewsAfter, 'days'));
+        // do not keep older news than this.deleteNewsAfter¸or more than 150
+        return newArray.filter((news: News, index: number) =>
+            (moment.unix(news.datetime).isAfter(moment().add(-this.deleteNewsAfter, 'days')) || index > 150));
     }
 
     /**
      * refresh news in storage for favorite stocks
      */
-    public async refreshNews() {
+    public refreshNews = async() => {
         const favoriteStocks = this.store.getState().appReducer.favoriteStocks;
         if(!favoriteStocks.length) {
             return;

@@ -6,8 +6,10 @@
 @import url('https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&display=swap');
 
 :root {
-    --border-color: black;
+    --border-color: var(--black);
     --background-color: var(--white-10-dark);
+    --hover-color: var(--white-15-dark);
+    --menu-buttons-gradient-color: var(--white-40-dark);
 
     @include color-pallete($green, "green");
     @include color-pallete($red, "red");
